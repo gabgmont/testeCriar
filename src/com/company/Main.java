@@ -9,16 +9,16 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-    List<Piloto> lista = new ArrayList<>();
+        List<Piloto> lista = new ArrayList<>();
 
         String caminho = "C:\\Users\\gabgm\\OneDrive\\Documentos\\Gabriel\\arquivos\\log.txt";
 
-        try(BufferedReader leitor = new BufferedReader (new FileReader(caminho))){
+        try (BufferedReader leitor = new BufferedReader(new FileReader(caminho))) {
             String linha = leitor.readLine();
             linha = leitor.readLine();
 
-            while(linha != null) {
-                linha = linha.replaceAll(":",",");
+            while (linha != null) {
+                linha = linha.replaceAll(":", ",");
 
                 String info[] = linha.split(" ");
                 Integer codigoPiloto = Integer.parseInt(info[1]);
@@ -31,19 +31,40 @@ public class Main {
 
                 linha = leitor.readLine();
             }
-            for (Piloto p : lista){
-                System.out.println(p);
-            }
-        }catch(IOException e){
+
+            CalculoVolta(lista);
+
+        } catch (IOException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    static Double FormatarTempo (String info){
+    static Double FormatarTempo(String info) {
         String tempo[] = info.split(",");
-        Integer min = Integer.parseInt(tempo[0])*60;
+        Integer min = Integer.parseInt(tempo[0]) * 60;
         Double seg = Double.parseDouble(tempo[1]);
 
-        return min+seg;
+        return min + seg;
     }
+
+    static void CalculoVolta(List<Piloto> lista) {
+        List idPiloto = new ArrayList();
+        for(Piloto p : lista){
+            if(!idPiloto.contains(p.getCodigo())){
+                idPiloto.add(p.getCodigo());
+            }
+        }
+        System.out.println(idPiloto);
+
+            Double tempoTotal = 0.0;
+        for (int i=0; i < idPiloto.size(); i++) {
+            tempoTotal = 0.0;
+            for(Piloto p : lista){
+                if (p.getCodigo() == idPiloto.toArray()[i]) {
+                    System.out.println(p);
+                    tempoTotal = tempoTotal + p.getTempoVolta();
+                }
+            }System.out.println(tempoTotal);
+        }
+   }
 }
