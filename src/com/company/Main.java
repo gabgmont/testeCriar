@@ -17,20 +17,19 @@ public class Main {
             String linha = leitor.readLine();
             linha = leitor.readLine();
 
-            while(leitor.readLine() != null) {
-                    linha = linha.replaceAll(":",",");
+            while(linha != null) {
+                linha = linha.replaceAll(":",",");
 
-                    String info[] = linha.split(" ");
-                    Integer codigoPiloto = Integer.parseInt(info[1]);
-                    String nomePiloto = info[3];
-                    Integer numeroVolta = Integer.parseInt(info[4]);
-                    Double tempoVolta = FormatarTempo(info[5]);
+                String info[] = linha.split(" ");
+                Integer codigoPiloto = Integer.parseInt(info[1]);
+                String nomePiloto = info[3];
+                Integer numeroVolta = Integer.parseInt(info[4]);
+                Double tempoVolta = FormatarTempo(info[5]);
 
-                    Piloto piloto = new Piloto(codigoPiloto, nomePiloto, numeroVolta, tempoVolta);
-                    lista.add(piloto);
+                Piloto piloto = new Piloto(codigoPiloto, nomePiloto, numeroVolta, tempoVolta);
+                lista.add(piloto);
 
-                    linha = leitor.readLine();
-
+                linha = leitor.readLine();
             }
             for (Piloto p : lista){
                 System.out.println(p);
