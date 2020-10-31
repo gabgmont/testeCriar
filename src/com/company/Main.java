@@ -32,13 +32,23 @@ public class Main {
                 linha = leitor.readLine();
             }
 
-            CalculoVolta(lista);
+            List idPiloto = new ArrayList();
+            for(Piloto p : lista){
+                if(!idPiloto.contains(p.getCodigo())){
+                    idPiloto.add(p.getCodigo());
+                }
+            }
+            System.out.println(idPiloto);
+
+            for (int i=0; i < idPiloto.size(); i++) {
+                CalculoVolta(lista, idPiloto, i);
+//                Resultado resultado = new Resultado()
+            }
 
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
     }
-
     static Double FormatarTempo(String info) {
         String tempo[] = info.split(",");
         Integer min = Integer.parseInt(tempo[0]) * 60;
@@ -46,25 +56,21 @@ public class Main {
 
         return min + seg;
     }
+    static void CalculoVolta(List<Piloto> lista, List codigos, int i) {
 
-    static void CalculoVolta(List<Piloto> lista) {
-        List idPiloto = new ArrayList();
-        for(Piloto p : lista){
-            if(!idPiloto.contains(p.getCodigo())){
-                idPiloto.add(p.getCodigo());
-            }
-        }
-        System.out.println(idPiloto);
-
-            Double tempoTotal = 0.0;
-        for (int i=0; i < idPiloto.size(); i++) {
+        Double tempoTotal;
             tempoTotal = 0.0;
+            Piloto piloto = null;
             for(Piloto p : lista){
-                if (p.getCodigo() == idPiloto.toArray()[i]) {
-                    System.out.println(p);
+                if (p.getCodigo() == codigos.toArray()[i]) {
                     tempoTotal = tempoTotal + p.getTempoVolta();
+                    piloto = p;
                 }
-            }System.out.println(tempoTotal);
-        }
+            }
+//            System.out.println(piloto);
+//            System.out.println(tempoTotal);
+
+        Resultado resultado = new Resultado(piloto.getCodigo(), piloto.getNome(), 1, piloto.getNumeroVolta(), tempoTotal);
+        System.out.println(resultado);
    }
 }
