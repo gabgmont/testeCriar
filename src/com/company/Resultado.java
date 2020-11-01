@@ -67,9 +67,9 @@ public class Resultado implements Comparable<Resultado> {
 
     @Override
     public int compareTo(Resultado o) {
-        if (this.tempoProva < o.getTempoProva()){
+        if (this.tempoProva < o.getTempoProva() && this.numeroVoltas >= o.getNumeroVoltas()){
             return -1;
-        }else if(this.tempoProva > o.getTempoProva()){
+        }else if(this.tempoProva > o.getTempoProva() && this.numeroVoltas < o.getNumeroVoltas()){
             return 1;
         }
         return 0;

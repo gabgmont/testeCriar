@@ -44,6 +44,7 @@ public class Main {
                listaResultado.add(resultado);
             }
             Collections.sort(listaResultado);
+
             for(int i=0; i < listaResultado.size(); i++){
                 listaResultado.get(i).setPosicaoPiloto(i+1);
             }
