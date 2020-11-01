@@ -1,16 +1,15 @@
 package com.company;
 
-public class Resultado {
+public class Resultado implements Comparable<Resultado> {
     private Integer codigoPiloto;
     private String nomePiloto;
     private Integer posicaoPiloto;
     private Integer numeroVoltas;
     private Double tempoProva;
 
-    public Resultado(Integer codigoPiloto, String nomePiloto, Integer posicaoPiloto, Integer numeroVoltas, Double tempoProva) {
+    public Resultado(Integer codigoPiloto, String nomePiloto, Integer numeroVoltas, Double tempoProva) {
         this.codigoPiloto = codigoPiloto;
         this.nomePiloto = nomePiloto;
-        this.posicaoPiloto = posicaoPiloto;
         this.numeroVoltas = numeroVoltas;
         this.tempoProva = tempoProva;
     }
@@ -63,6 +62,16 @@ public class Resultado {
                 ", Posicao do Piloto = " + posicaoPiloto +
                 ", Numero de Voltas = " + numeroVoltas +
                 ", Tempo de Prova = " + tempoProva +
-                '}';
+                "}\n";
+    }
+
+    @Override
+    public int compareTo(Resultado o) {
+        if (this.tempoProva < o.getTempoProva()){
+            return -1;
+        }else if(this.tempoProva > o.getTempoProva()){
+            return 1;
+        }
+        return 0;
     }
 }
