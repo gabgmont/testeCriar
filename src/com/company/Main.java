@@ -48,7 +48,8 @@ public class Main {
             for(int i=0; i < listaResultado.size(); i++){
                 listaResultado.get(i).setPosicaoPiloto(i+1);
             }
-            System.out.println(listaResultado);
+            System.out.println("\nDesempenho dos pilotos na corrida: \n" + listaResultado);
+            System.out.println("\nA melhor volta foi: \n" + MelhorVolta(listaPiloto) ); // Bônus 1*
 
         } catch (IOException e) {
             System.out.println(e.getMessage());
@@ -64,16 +65,24 @@ public class Main {
     static Resultado CalculoResultado(List<Piloto> lista, List codigos, int i) {
 
         Double tempoTotal;
-            tempoTotal = 0.0;
-            Piloto piloto = null;
-            for(Piloto p : lista){
-                if (p.getCodigo() == codigos.toArray()[i]) {
-                    tempoTotal = tempoTotal + p.getTempoVolta();
-                    piloto = p;
-                }
+        tempoTotal = 0.0;
+        Piloto piloto = null;
+        for(Piloto p : lista){
+            if (p.getCodigo() == codigos.toArray()[i]) {
+                tempoTotal = tempoTotal + p.getTempoVolta();
+                piloto = p;
             }
+        }
 
         Resultado resultado = new Resultado(piloto.getCodigo(), piloto.getNome(), piloto.getNumeroVolta(), tempoTotal);
         return resultado;
+    }
+
+    static Object MelhorVolta(List<Piloto> lista){
+
+        List listaFormatada = lista;
+        Collections.sort(listaFormatada);
+
+        return listaFormatada.get(0);
     }
 }

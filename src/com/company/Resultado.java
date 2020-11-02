@@ -6,6 +6,7 @@ public class Resultado implements Comparable<Resultado> {
     private Integer posicaoPiloto;
     private Integer numeroVoltas;
     private Double tempoProva;
+    private Double melhorVolta;
 
     public Resultado(Integer codigoPiloto, String nomePiloto, Integer numeroVoltas, Double tempoProva) {
         this.codigoPiloto = codigoPiloto;
@@ -52,6 +53,14 @@ public class Resultado implements Comparable<Resultado> {
 
     public void setTempoProva(Double tempoProva) {
         this.tempoProva = tempoProva;
+    }
+
+    public Double getMelhorVolta() {
+        return melhorVolta;
+    }
+
+    public void setMelhorVolta(Double melhorVolta) {
+        this.melhorVolta = melhorVolta;
     }
 
     @Override

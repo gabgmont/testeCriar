@@ -2,7 +2,7 @@ package com.company;
 
 import java.util.ArrayList;
 
-public class Piloto {
+public class Piloto implements Comparable<Piloto> {
 
     private Integer codigo;
     private String nome;
@@ -55,6 +55,16 @@ public class Piloto {
                 ", nome='" + nome + '\'' +
                 ", numeroVolta=" + numeroVolta +
                 ", tempoVolta=" + tempoVolta +
-                '}';
+                "}\n";
+    }
+
+    @Override
+    public int compareTo(Piloto p) {
+        if (this.tempoVolta < p.getTempoVolta()){
+            return -1;
+        }else if(this.tempoVolta > p.getTempoVolta()){
+            return 1;
+        }
+        return 0;
     }
 }
