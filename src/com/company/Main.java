@@ -33,26 +33,40 @@ public class Main {
 
                 linha = leitor.readLine();
             }
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+
+        //Criando lista com o código de cada piloto.
+        try {
             List idPiloto = new ArrayList();
             for(Piloto p : listaPiloto){
                 if(!idPiloto.contains(p.getCodigo())){
                     idPiloto.add(p.getCodigo());
                 }
             }
+
+            //Resultado de cada piloto
             for (int i=0; i < idPiloto.size(); i++) {
                Resultado resultado = CalculoResultado(listaPiloto, idPiloto, i);
                listaResultado.add(resultado);
             }
             Collections.sort(listaResultado);
 
+            //Definindo a posição de cada piloto
             for(int i=0; i < listaResultado.size(); i++){
                 listaResultado.get(i).setPosicaoPiloto(i+1);
             }
-            System.out.println("\nDesempenho dos pilotos na corrida: \n" + listaResultado);
-            System.out.println("\nA melhor volta foi: \n" + MelhorVolta(listaPiloto) ); // Bônus 1*
 
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
+            System.out.println("\nDesempenho dos pilotos na corrida: \n" + listaResultado);
+            System.out.println("\nA melhor volta da corrida foi: \n" + MelhorVoltaCorrida(listaPiloto) );
+
+            //Achando a melhor volta de cada piloto
+            for (int i=0; i < idPiloto.size(); i++) {
+                System.out.println(MelhorVoltaPiloto(listaPiloto, idPiloto, i));
+            }
+        }catch (Exception e){
+            e.getMessage();
         }
     }
     static Double FormatarTempo(String info) {
@@ -78,11 +92,27 @@ public class Main {
         return resultado;
     }
 
-    static Object MelhorVolta(List<Piloto> lista){
+    static Object MelhorVoltaCorrida(List<Piloto> lista){
 
         List listaFormatada = lista;
         Collections.sort(listaFormatada);
 
         return listaFormatada.get(0);
+    }
+
+    static String MelhorVoltaPiloto (List<Piloto> lista, List codigos, int i) {
+        String nome = "";
+        Double tempoVolta = 0.0;
+
+        Collections.sort(lista);
+        for(Piloto p : lista){
+            if (p.getCodigo() == codigos.toArray()[i]) {
+                nome = p.getNome();
+                tempoVolta = p.getTempoVolta();
+                break;
+            }
+
+        }
+        return "Melhor volta do Piloto: " + nome + " foi com o tempo de: " + tempoVolta + "s";
     }
 }

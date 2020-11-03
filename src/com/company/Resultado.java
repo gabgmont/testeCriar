@@ -70,7 +70,7 @@ public class Resultado implements Comparable<Resultado> {
                 ", Nome do Piloto = '" + nomePiloto + '\'' +
                 ", Posicao do Piloto = " + posicaoPiloto +
                 ", Numero de Voltas = " + numeroVoltas +
-                ", Tempo de Prova = " + tempoProva +
+                ", Tempo de Prova = " + tempoProva + "s" +
                 "}\n";
     }
 

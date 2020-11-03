@@ -51,10 +51,10 @@ public class Piloto implements Comparable<Piloto> {
     @Override
     public String toString() {
         return "Piloto{" +
-                "codigo=" + codigo +
-                ", nome='" + nome + '\'' +
-                ", numeroVolta=" + numeroVolta +
-                ", tempoVolta=" + tempoVolta +
+                "Codigo do Piloto = " + codigo +
+                ", Nome do Piloto = '" + nome + '\'' +
+                ", Numero da Volta = " + numeroVolta +
+                ", Tempo da Volta = " + tempoVolta + "s" +
                 "}\n";
     }
 
