@@ -1,8 +1,6 @@
 package com.company;
 
-import java.util.ArrayList;
-
-public class Piloto implements Comparable<Piloto> {
+public class Volta implements Comparable<Volta> {
 
     private Integer codigo;
     private String nome;
@@ -10,7 +8,7 @@ public class Piloto implements Comparable<Piloto> {
     private Double tempoVolta;
     private Double velocidadeVolta;
 
-    public Piloto(Integer codigo, String nome, Integer numeroVolta, Double tempoVolta, Double velocidadeVolta) {
+    public Volta(Integer codigo, String nome, Integer numeroVolta, Double tempoVolta, Double velocidadeVolta) {
         this.codigo = codigo;
         this.nome = nome;
         this.numeroVolta = numeroVolta;
@@ -69,7 +67,7 @@ public class Piloto implements Comparable<Piloto> {
     }
 
     @Override
-    public int compareTo(Piloto p) {
+    public int compareTo(Volta p) {
         if (this.tempoVolta < p.getTempoVolta()){
             return -1;
         }else if(this.tempoVolta > p.getTempoVolta()){

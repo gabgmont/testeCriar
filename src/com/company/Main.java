@@ -13,7 +13,7 @@ public class Main {
     static DecimalFormat df = new DecimalFormat("##,##0.00");
 
     public static void main(String[] args) {
-        List<Piloto> listaPiloto = new ArrayList<>();
+        List<Volta> listaVolta = new ArrayList<>();
         List<Resultado> listaResultado = new ArrayList<>();
 
         String caminho = "C:\\Users\\gabgm\\OneDrive\\Documentos\\Gabriel\\arquivos\\log.txt";
@@ -32,8 +32,8 @@ public class Main {
                 Double tempoVolta = FormatarTempo(info[5]);
                 Double velocidadeVolta = Double.parseDouble(info[6].replaceAll(",", "."));
 
-                Piloto piloto = new Piloto(codigoPiloto, nomePiloto, numeroVolta, tempoVolta, velocidadeVolta);
-                listaPiloto.add(piloto);
+                Volta volta = new Volta(codigoPiloto, nomePiloto, numeroVolta, tempoVolta, velocidadeVolta);
+                listaVolta.add(volta);
 
                 linha = leitor.readLine();
             }
@@ -44,7 +44,7 @@ public class Main {
         //Criando lista com o código de cada piloto.
         try {
             List idPiloto = new ArrayList();
-            for(Piloto p : listaPiloto){
+            for(Volta p : listaVolta){
                 if(!idPiloto.contains(p.getCodigo())){
                     idPiloto.add(p.getCodigo());
                 }
@@ -52,7 +52,7 @@ public class Main {
 
             //Resultado de cada piloto
             for (int i=0; i < idPiloto.size(); i++) {
-               Resultado resultado = CalculoResultado(listaPiloto, idPiloto, i);
+               Resultado resultado = CalculoResultado(listaVolta, idPiloto, i);
                listaResultado.add(resultado);
             }
             Collections.sort(listaResultado);
@@ -63,18 +63,18 @@ public class Main {
             }
             System.out.println("\nDesempenho dos pilotos na corrida: \n" + listaResultado);
             System.out.println("___________________________________________________________");
-            System.out.println("\nA melhor volta da corrida foi: \n" + MelhorVoltaCorrida(listaPiloto) );
+            System.out.println("\nA melhor volta da corrida foi: \n" + MelhorVoltaCorrida(listaVolta) );
             System.out.println("___________________________________________________________\n");
 
             //Achando a melhor volta de cada piloto
             for (int i=0; i < idPiloto.size(); i++) {
-                System.out.println(MelhorVoltaPiloto(listaPiloto, idPiloto, i));
+                System.out.println(MelhorVoltaPiloto(listaVolta, idPiloto, i));
             }
             System.out.println("\n___________________________________________________________\n");
 
             //Velocidade média de cada piloto
             for (int i=0; i < idPiloto.size(); i++) {
-                System.out.println(VelocidadeMedia(listaPiloto, idPiloto, i));
+                System.out.println(VelocidadeMedia(listaVolta, idPiloto, i));
             }
             System.out.println("\n___________________________________________________________\n");
 
@@ -91,28 +91,28 @@ public class Main {
 
         return min + seg;
     }
-    static Resultado CalculoResultado(List<Piloto> lista, List codigos, int i) {
+    static Resultado CalculoResultado(List<Volta> lista, List codigos, int i) {
         double tempoTotal;
         tempoTotal = 0.0;
-        Piloto piloto = null;
+        Volta volta = null;
 
-        for(Piloto p : lista){
+        for(Volta p : lista){
             if (p.getCodigo() == codigos.toArray()[i]) {
                 tempoTotal = tempoTotal + p.getTempoVolta();
-                piloto = p;
+                volta = p;
             }
         }
         df.format(tempoTotal);
-        assert piloto != null;
-        return new Resultado(piloto.getCodigo(), piloto.getNome(), piloto.getNumeroVolta(), tempoTotal);
+        assert volta != null;
+        return new Resultado(volta.getCodigo(), volta.getNome(), volta.getNumeroVolta(), tempoTotal);
         }
 
-    static String VelocidadeMedia (List<Piloto> lista, List codigos, int i) {
+    static String VelocidadeMedia (List<Volta> lista, List codigos, int i) {
         String nome = "";
         int numeroVoltas = 0;
         double velMedia = 0.0;
 
-        for(Piloto p : lista){
+        for(Volta p : lista){
             if (p.getCodigo() == codigos.toArray()[i]) {
                 velMedia = velMedia + p.getVelocidadeVolta();
                 nome = p.getNome();
@@ -122,17 +122,17 @@ public class Main {
         return "A velocidade média do piloto " + nome + " foi: " + df.format(velMedia/numeroVoltas);
     }
 
-    static Object MelhorVoltaCorrida(List<Piloto> lista){
+    static Object MelhorVoltaCorrida(List<Volta> lista){
         Collections.sort(lista);
         return lista.get(0);
     }
 
-    static String MelhorVoltaPiloto (List<Piloto> lista, List codigos, int i) {
+    static String MelhorVoltaPiloto (List<Volta> lista, List codigos, int i) {
         String nome = "";
         Double tempoVolta = 0.0;
         Collections.sort(lista);
 
-        for(Piloto p : lista){
+        for(Volta p : lista){
             if (p.getCodigo() == codigos.toArray()[i]) {
                 nome = p.getNome();
                 tempoVolta = p.getTempoVolta();
