@@ -8,12 +8,14 @@ public class Piloto implements Comparable<Piloto> {
     private String nome;
     private Integer numeroVolta;
     private Double tempoVolta;
+    private Double velocidadeVolta;
 
-    public Piloto(Integer codigo, String nome, Integer numeroVolta, Double tempoVolta) {
+    public Piloto(Integer codigo, String nome, Integer numeroVolta, Double tempoVolta, Double velocidadeVolta) {
         this.codigo = codigo;
         this.nome = nome;
         this.numeroVolta = numeroVolta;
         this.tempoVolta = tempoVolta;
+        this.velocidadeVolta = velocidadeVolta;
     }
 
     public Integer getCodigo() {
@@ -46,6 +48,14 @@ public class Piloto implements Comparable<Piloto> {
 
     public void setTempoVolta(Double tempoVolta) {
         this.tempoVolta = tempoVolta;
+    }
+
+    public Double getVelocidadeVolta() {
+        return velocidadeVolta;
+    }
+
+    public void setVelocidadeVolta(Double velocidadeVolta) {
+        this.velocidadeVolta = velocidadeVolta;
     }
 
     @Override

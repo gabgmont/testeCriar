@@ -3,11 +3,14 @@ package com.company;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class Main {
+
+    static DecimalFormat df = new DecimalFormat("##,##0.00");
 
     public static void main(String[] args) {
         List<Piloto> listaPiloto = new ArrayList<>();
@@ -27,8 +30,9 @@ public class Main {
                 String nomePiloto = info[3];
                 Integer numeroVolta = Integer.parseInt(info[4]);
                 Double tempoVolta = FormatarTempo(info[5]);
+                Double velocidadeVolta = Double.parseDouble(info[6].replaceAll(",", "."));
 
-                Piloto piloto = new Piloto(codigoPiloto, nomePiloto, numeroVolta, tempoVolta);
+                Piloto piloto = new Piloto(codigoPiloto, nomePiloto, numeroVolta, tempoVolta, velocidadeVolta);
                 listaPiloto.add(piloto);
 
                 linha = leitor.readLine();
@@ -57,16 +61,27 @@ public class Main {
             for(int i=0; i < listaResultado.size(); i++){
                 listaResultado.get(i).setPosicaoPiloto(i+1);
             }
-
             System.out.println("\nDesempenho dos pilotos na corrida: \n" + listaResultado);
+            System.out.println("___________________________________________________________");
             System.out.println("\nA melhor volta da corrida foi: \n" + MelhorVoltaCorrida(listaPiloto) );
+            System.out.println("___________________________________________________________\n");
 
             //Achando a melhor volta de cada piloto
             for (int i=0; i < idPiloto.size(); i++) {
                 System.out.println(MelhorVoltaPiloto(listaPiloto, idPiloto, i));
             }
-        }catch (Exception e){
-            e.getMessage();
+            System.out.println("\n___________________________________________________________\n");
+
+            //Velocidade média de cada piloto
+            for (int i=0; i < idPiloto.size(); i++) {
+                System.out.println(VelocidadeMedia(listaPiloto, idPiloto, i));
+            }
+            System.out.println("\n___________________________________________________________\n");
+
+            //Diferença entre o tempo do primeiro para os demais pilotos.
+            DiferencaTempo(listaResultado);
+        }catch (NullPointerException e){
+            System.out.println(e.getMessage());
         }
     }
     static Double FormatarTempo(String info) {
@@ -77,42 +92,69 @@ public class Main {
         return min + seg;
     }
     static Resultado CalculoResultado(List<Piloto> lista, List codigos, int i) {
-
-        Double tempoTotal;
+        double tempoTotal;
         tempoTotal = 0.0;
         Piloto piloto = null;
+
         for(Piloto p : lista){
             if (p.getCodigo() == codigos.toArray()[i]) {
                 tempoTotal = tempoTotal + p.getTempoVolta();
                 piloto = p;
             }
         }
+        df.format(tempoTotal);
+        assert piloto != null;
+        return new Resultado(piloto.getCodigo(), piloto.getNome(), piloto.getNumeroVolta(), tempoTotal);
+        }
 
-        Resultado resultado = new Resultado(piloto.getCodigo(), piloto.getNome(), piloto.getNumeroVolta(), tempoTotal);
-        return resultado;
+    static String VelocidadeMedia (List<Piloto> lista, List codigos, int i) {
+        String nome = "";
+        int numeroVoltas = 0;
+        double velMedia = 0.0;
+
+        for(Piloto p : lista){
+            if (p.getCodigo() == codigos.toArray()[i]) {
+                velMedia = velMedia + p.getVelocidadeVolta();
+                nome = p.getNome();
+                numeroVoltas++;
+            }
+        }
+        return "A velocidade média do piloto " + nome + " foi: " + df.format(velMedia/numeroVoltas);
     }
 
     static Object MelhorVoltaCorrida(List<Piloto> lista){
-
-        List listaFormatada = lista;
-        Collections.sort(listaFormatada);
-
-        return listaFormatada.get(0);
+        Collections.sort(lista);
+        return lista.get(0);
     }
 
     static String MelhorVoltaPiloto (List<Piloto> lista, List codigos, int i) {
         String nome = "";
         Double tempoVolta = 0.0;
-
         Collections.sort(lista);
+
         for(Piloto p : lista){
             if (p.getCodigo() == codigos.toArray()[i]) {
                 nome = p.getNome();
                 tempoVolta = p.getTempoVolta();
                 break;
             }
-
         }
-        return "Melhor volta do Piloto: " + nome + " foi com o tempo de: " + tempoVolta + "s";
+        return "Melhor volta do Piloto: " + nome + " foi com o tempo de: " + df.format(tempoVolta) + "s";
+    }
+
+    static void DiferencaTempo (List<Resultado> lista){
+        Collections.sort(lista);
+        double diferenca;
+        double auxiliar = 0.0;
+
+        for(Resultado r : lista){
+            if(auxiliar == 0){
+                auxiliar = r.getTempoProva();
+                System.out.println("Primeiro Lugar: " + r.getNomePiloto());
+            }else{
+                diferenca = r.getTempoProva() - auxiliar;
+                System.out.println("Diferença do piloto " + r.getNomePiloto() + " foi de " + df.format(diferenca)+" segundos para o primeiro lugar.");
+            }
+        }
     }
 }
